@@ -1,6 +1,10 @@
 import os
 from flask import Flask, jsonify
-from flask_cors import CORS
+try:
+    from flask_cors import CORS
+    HAS_CORS = True
+except ImportError:
+    HAS_CORS = False
 from app.config import Config
 from app.database import db
 from app.models import WAFRule
@@ -16,7 +20,15 @@ def create_app():
     """Application factory for AMRSF Web Application Firewall."""
     app = Flask(__name__)
     app.config.from_object(Config)
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    if HAS_CORS:
+        CORS(app, resources={r"/api/*": {"origins": "*"}})
+    else:
+        @app.after_request
+        def add_cors_headers(response):
+            response.headers["Access-Control-Allow-Origin"] = "*"
+            response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+            response.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS"
+            return response
 
     db.init_app(app)
 

@@ -1,6 +1,14 @@
 import os
+import time
 import requests
-from cachetools import TTLCache
+try:
+    from cachetools import TTLCache
+except ImportError:
+    class TTLCache(dict):
+        def __init__(self, maxsize=2048, ttl=3600):
+            super().__init__()
+            self.maxsize = maxsize
+            self.ttl = ttl
 from typing import Dict, List
 from app.config import Config
 

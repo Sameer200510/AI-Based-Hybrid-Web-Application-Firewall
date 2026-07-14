@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: amrsf_postgres
+    environment:
+      POSTGRES_USER: amrsf_user
+      POSTGRES_PASSWORD: amrsf_secure_password
+      POSTGRES_DB: waf_amrsf_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: amrsf_backend
+    environment:
+      - DATABASE_URL=postgresql://amrsf_user:amrsf_secure_password@postgres:5432/waf_amrsf_db
+      - SECRET_KEY=production-ieee-research-amrsf-secret-2026
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: amrsf_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pgdata:

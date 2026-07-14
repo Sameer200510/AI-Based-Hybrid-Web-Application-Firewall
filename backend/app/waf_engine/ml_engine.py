@@ -185,22 +185,30 @@ class ExplainableMLEngine:
         shap_data = []
 
         if feat_vector[5] > 0:  # sql_kw
-            score += min(60.0, feat_vector[5] * 30.0)
+            score += min(65.0, feat_vector[5] * 32.0)
             reasons.append(f"SQL Keywords Count ({int(feat_vector[5])} keywords)")
             shap_data.append({"feature": "Sql Keyword Count", "impact": 0.42, "direction": "+", "value_observed": float(feat_vector[5])})
-        if feat_vector[6] > 0:  # xss_kw
-            score += min(60.0, feat_vector[6] * 35.0)
-            reasons.append(f"XSS Script/Event Tags ({int(feat_vector[6])} occurrences)")
+        if feat_vector[9] > 0 or feat_vector[12] >= 2:  # comment_syntax_count or single_quote_count
+            score += 35.0
+            reasons.append("SQL Comment or Quote Injection Syntax")
+            shap_data.append({"feature": "Comment Syntax Count", "impact": 0.28, "direction": "+", "value_observed": float(feat_vector[9])})
+        if feat_vector[22] > 0:  # union_select_flag
+            score += 70.0
+            reasons.append("UNION SELECT SQL Injection Pattern")
+            shap_data.append({"feature": "Union Select Flag", "impact": 0.55, "direction": "+", "value_observed": float(feat_vector[22])})
+        if feat_vector[6] > 0 or feat_vector[23] > 0:  # xss_kw or script_tag
+            score += min(65.0, max(35.0, feat_vector[6] * 35.0))
+            reasons.append("XSS Script/Event Tags Detected")
             shap_data.append({"feature": "Xss Keyword Count", "impact": 0.45, "direction": "+", "value_observed": float(feat_vector[6])})
-        if feat_vector[7] > 0:  # cmd_kw
-            score += min(60.0, feat_vector[7] * 35.0)
-            reasons.append(f"OS Shell Commands ({int(feat_vector[7])} commands)")
+        if feat_vector[7] > 0 or feat_vector[24] > 0:  # cmd_kw or eval_exec
+            score += min(65.0, max(35.0, feat_vector[7] * 35.0))
+            reasons.append("OS Shell Commands Detected")
             shap_data.append({"feature": "Cmd Keyword Count", "impact": 0.38, "direction": "+", "value_observed": float(feat_vector[7])})
-        if feat_vector[4] > 0.3:  # special_ratio
+        if feat_vector[4] > 0.28:  # special_ratio
             score += 25.0
             reasons.append(f"High Non-Alphanumeric Ratio ({feat_vector[4]*100:.1f}%)")
             shap_data.append({"feature": "Special Char Ratio", "impact": 0.22, "direction": "+", "value_observed": float(feat_vector[4])})
-        if feat_vector[10] >= 2:  # encoding_depth
+        if feat_vector[10] >= 1:  # encoding_depth
             score += 25.0
             reasons.append(f"Multi-Layer Decoding Depth ({int(feat_vector[10])})")
             shap_data.append({"feature": "Encoding Depth", "impact": 0.25, "direction": "+", "value_observed": float(feat_vector[10])})
