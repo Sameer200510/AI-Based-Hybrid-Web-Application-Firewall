@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-slate-900/80 backdrop-blur-md border border-slate-800/80 shadow-xl rounded-xl;
+  }
+  .glow-cyan {
+    box-shadow: 0 0 20px -5px rgba(56, 189, 248, 0.4);
+  }
+  .glow-red {
+    box-shadow: 0 0 20px -5px rgba(239, 68, 68, 0.4);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0e17;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
