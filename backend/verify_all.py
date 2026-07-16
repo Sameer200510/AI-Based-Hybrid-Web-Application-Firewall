@@ -34,7 +34,7 @@ def verify_all():
     res_comp = comp.analyze("/search", "payload=" + ("A@9$k#L!xZ&P*qW~" * 5))
     assert res_comp["shannon_entropy"] > 3.8, "Shannon entropy calculation failed!"
     print("[+] Layer 3 (Shannon Entropy & Complexity Analyzer): PASSED")
-
+ 
     # 4. Test ML + SHAP
     ml = ExplainableMLEngine()
     res_ml = ml.predict_with_shap("/login?u=admin' OR 1=1--", {}, "password=secret")
