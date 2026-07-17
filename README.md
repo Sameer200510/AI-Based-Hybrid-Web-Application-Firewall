@@ -92,7 +92,6 @@ waf/
 │   ├── run.py                    # Flask API server entry point
 │   └── tests/                    # Comprehensive PyTest unit & integration tests
 ├── frontend/                     # React + Vite + Tailwind CSS SOC Dashboard
-├── docs/                         # IEEE Research Summary, Architecture & API Documentation
 └── docker-compose.yml            # Complete Docker deployment setup
 ```
 
