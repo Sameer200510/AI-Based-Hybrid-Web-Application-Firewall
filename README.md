@@ -1,6 +1,6 @@
 # An Explainable AI-Based Hybrid Web Application Firewall with Adaptive Risk Scoring for Intelligent Detection and Response to Web Attacks (AMRSF)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License:  MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![React 18+](https://img.shields.io/badge/React-18+-61DAFB.svg)](https://reactjs.org/)
 [![IEEE Research Grade](https://img.shields.io/badge/IEEE-Research%20Grade-00629B.svg)](./docs/IEEE_RESEARCH_SUMMARY.md)
