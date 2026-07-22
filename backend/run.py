@@ -15,7 +15,6 @@ from app.api.logs import logs_bp
 from app.api.rules import rules_bp
 from app.api.ml_routes import ml_bp
 from app.api.threat_routes import threat_bp
-
 def create_app():
     """Application factory for AMRSF Web Application Firewall."""
     app = Flask(__name__)
