@@ -9,6 +9,7 @@ RUN npm install
 COPY frontend ./
 RUN npm run build
 
+
 # Production Nginx Stage
 FROM nginx:alpine
 
